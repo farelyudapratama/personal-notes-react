@@ -6,7 +6,7 @@ const getInitialData = () => ([
     createdAt: '2022-04-14T04:27:34.572Z',
     archived: false,
     color: "yellow",
-    pinned: true,
+    pinned: false,
   },
   {
     id: 2,
@@ -66,11 +66,11 @@ const showFormattedDate = (date) => {
 }
 
 const presetColors = [
-{ name: 'yellow', from: '#ffd60a', to: '#ffc300', border: '#ffaa00', glow: 'rgba(255, 214, 10, 0.4)' },
-    { name: 'blue', from: '#00d9ff', to: '#0099ff', border: '#0077ff', glow: 'rgba(0, 217, 255, 0.4)' },
-    { name: 'green', from: '#00ff88', to: '#00cc66', border: '#00ff66', glow: 'rgba(0, 255, 136, 0.4)' },
-    { name: 'pink', from: '#ff006e', to: '#ff5299', border: '#ff0080', glow: 'rgba(255, 0, 110, 0.4)' },
-    { name: 'purple', from: '#b537f2', to: '#9d4edd', border: '#7b2cbf', glow: 'rgba(181, 55, 242, 0.4)' },
+  { name: 'yellow', from: '#e3f02954', to: '#ffc40070', border: '#ffaa00', glow: 'rgba(255, 214, 10, 0.4)' },
+  { name: 'blue', from: '#00d9ff54', to: '#0099ff70', border: '#0077ff', glow: 'rgba(0, 217, 255, 0.4)' },
+  { name: 'green', from: '#00ff8854', to: '#00cc6670', border: '#00ff66', glow: 'rgba(0, 255, 136, 0.4)' },
+  { name: 'pink', from: '#ff006e54', to: '#ff529970', border: '#ff0080', glow: 'rgba(255, 0, 110, 0.4)' },
+  { name: 'purple', from: '#b537f254', to: '#9d4edd70', border: '#7b29cf', glow: 'rgba(181, 55, 242, 0.4)' },
 ];
 
 export { getInitialData, showFormattedDate, presetColors };

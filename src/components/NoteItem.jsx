@@ -1,17 +1,42 @@
 import React from 'react';
-import NoteCard from './NoteCard';
+import { showFormattedDate, presetColors } from '../utils';
+import DeleteButton from './DeleteButton';
 
-function NoteItem({ title, body, archived, pinned, createdAt, color }) {
+function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelete, onArchive }) {
+    const selected = presetColors.find((i) => i.name === color) || presetColors[0];
+
     return (
         <div className="note-item">
-            <NoteCard
-                title={title}
-                body={body}
-                archived={archived}
-                pinned={pinned}
-                createdAt={createdAt}
-                color={color}
-            />
+            <div
+                className="note-item__content"
+                style={{
+                    '--gradient': `linear-gradient(to right, ${selected.from}, ${selected.to})`,
+                    '--border': `${selected.border}`,
+                }}
+            >
+                <div className="note-item__header">
+                    <h2 className="note-item__title">{title}</h2>
+                    <p className="note-item__pinned">{pinned ? 'Pinned' : 'Unpinned'}</p>
+                </div>
+                <p className="note-item__date">Created At: {showFormattedDate(createdAt)}</p>
+                <p className="note-item__body">{body}</p>
+
+                <div className="note-item__action">
+                    <button
+                        type="button"
+                        className="note-item__archive-button"
+                        aria-label="Archive note"
+                        onClick={() => {
+                            if (typeof onArchive === 'function') {
+                                onArchive(id);
+                            }
+                        }}
+                    >
+                        {archived ? 'Unarchive' : 'Archive'}
+                    </button>
+                    <DeleteButton id={id} onDelete={onDelete} />
+                </div>
+            </div>
         </div>
     );
 }
