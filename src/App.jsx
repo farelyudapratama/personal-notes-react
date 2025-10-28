@@ -2,8 +2,8 @@ import React from 'react';
 import { getInitialData } from './utils';
 import NoteList from './components/NoteList';
 import NoteInput from './components/NoteInput';
-import SearchBar from './components/SearchBar';
 import TabNavigation from './components/TabNavigation';
+import HeaderApp from './components/Header';
 
 class App extends React.Component {
     constructor(props) {
@@ -76,8 +76,7 @@ class App extends React.Component {
 
         return (
             <div className="app">
-                <h1>My Notes App</h1>
-                <SearchBar query={searchQuery} onQueryChange={this.onSearchChangeHandler} />
+                <HeaderApp searchQuery={searchQuery} onSearchChange={this.onSearchChangeHandler} />
                 <NoteInput addNote={this.onAddNoteHandler} />
                 <TabNavigation activeTab={activeTab} onTabChange={this.onTabChangeHandler} />
                 <div className="note-app__body">
