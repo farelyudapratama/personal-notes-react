@@ -179,6 +179,29 @@ input::placeholder, textarea::placeholder {
   color: #b00020;
 }
 
+.note-item__pin-button {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-top: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  padding: 8px 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  cursor: poPoppins;
+  color: #00ccff;
+}
+
+.note-item__pin-button:hover {
+  color: #0099cc;
+}
+
+.note-item.pinned {
+  box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+  border: 2px solid #00ccff;
+}
+
 @media only screen and (min-width: 500px) {
   .notes-list {
     grid-template-columns: 1fr 1fr;

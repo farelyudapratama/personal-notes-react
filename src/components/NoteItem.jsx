@@ -2,12 +2,13 @@ import React from 'react';
 import { showFormattedDate, presetColors } from '../utils';
 import DeleteButton from './DeleteButton';
 import ArchiveButton from './ArchiveButton';
+import PinButton from './PinButton';
 
-function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelete, onArchive }) {
+function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelete, onArchive, onPin }) {
     const selected = presetColors.find((i) => i.name === color) || presetColors[0];
 
     return (
-        <div className="note-item">
+        <div className={`note-item ${pinned ? 'pinned' : ''}`}>
             <div
                 className="note-item__content"
                 style={{
@@ -23,6 +24,7 @@ function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelet
                 <p className="note-item__body">{body}</p>
 
                 <div className="note-item__action">
+                    <PinButton id={id} pinned={pinned} onPin={onPin} />
                     <ArchiveButton id={id} archived={archived} onArchive={onArchive} />
                     <DeleteButton id={id} onDelete={onDelete} />
                 </div>
