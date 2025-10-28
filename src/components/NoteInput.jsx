@@ -61,11 +61,11 @@ class NoteInput extends React.Component {
                 />
 
                 <div>
-                    <label htmlFor="color">Color: </label>
+                    <label htmlFor="color">Choose a color: </label>
                     <ColorPicker colors={presetColors} selected={this.state.color} onSelect={this.onColorSelect} />
                 </div>
 
-                <button type="submit" className="note-input__submit-button">Add Note</button>
+                <button type="submit">Add Note</button>
             </form>
         );
     }

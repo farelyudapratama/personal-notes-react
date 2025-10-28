@@ -11,7 +11,8 @@ function filterNotes(notes, archived, searchQuery = '') {
     return filteredNotes.sort((a, b) => {
         if (a.pinned && !b.pinned) return -1;
         if (!a.pinned && b.pinned) return 1;
-        return new Date(b.createdAt) - new Date(a.createdAt);
+        return new Date(a.createdAt) - new Date(b.createdAt);
+        // return new Date(b.createdAt) - new Date(a.createdAt);
     });
 }
 

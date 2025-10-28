@@ -7,14 +7,14 @@ function NoteList({ notes, searchQuery, archived, onDelete, onArchive, onPin }) 
 
     return (
         <div>
-            <h2>{archived ? 'Catatan Arsip' : 'Catatan Aktif'}</h2>
+            <h2>{archived ? 'Archived Notes' : 'Active Notes'}</h2>
             <div className="notes-list">
                 {filteredNotes.length > 0 ? (
                     filteredNotes.map(note => (
                         <NoteItem key={note.id} {...note} onDelete={onDelete} onArchive={onArchive} onPin={onPin} />
                     ))
                 ) : (
-                    <p>Tidak ada catatan {archived ? 'arsip' : 'aktif'}{searchQuery ? ' untuk pencarian "' + searchQuery + '"' : ''}</p>
+                    <p>There are no {archived ? 'archived' : 'active'} notes {searchQuery ? 'matching "' + searchQuery + '"' : ''}.</p>
                 )}
             </div>
         </div>

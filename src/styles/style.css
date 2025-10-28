@@ -9,7 +9,12 @@ body {
   background-color: #202124;
   color: white;
 }
-
+button{
+  cursor: pointer;
+}
+button:hover{
+  opacity: 0.8;
+}
 input, textarea {
   padding: 12px;
   margin: 12px 0;
@@ -73,6 +78,55 @@ input::placeholder, textarea::placeholder {
 
 .note-input__body {
   min-height: 175px;
+}
+
+.note-input__color-button{
+  --size: 44px;
+  width: var(--size);
+  height: var(--size);
+  display:inline-block;
+  margin-right:10px;
+  margin-top:8px;
+  padding:0;
+  border-radius:50%;
+  border: 2px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  position:relative;
+  vertical-align:middle;
+  cursor: pointer;
+}
+
+.color-picker{
+  display:flex;
+  flex-direction:row;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.note-input__color-button.selected::before{
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  z-index: 0;
+}
+.note-input__color-button.selected::after{
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .note-input button {
@@ -189,7 +243,6 @@ input::placeholder, textarea::placeholder {
   padding: 8px 0;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  cursor: poPoppins;
   color: #00ccff;
 }
 
@@ -246,7 +299,7 @@ input::placeholder, textarea::placeholder {
 }
 
 .tab-button.active {
-  background-color: #0077ff;
+  background-color: #002d61;
   color: white;
 }
 

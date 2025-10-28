@@ -12,13 +12,12 @@ function ColorPicker({ colors, selected, onSelect }) {
                         background: `linear-gradient(to right, ${c.from}, ${c.to})`,
                         border: `2px solid ${c.border}`,
                         boxShadow: `0 6px 18px ${c.glow}`,
-                        color: '#021018',
+                        borderRadius: '10px',
                     }}
                     onClick={() => onSelect(c.name)}
                     aria-pressed={selected === c.name}
                     aria-label={`Choose ${c.name}`}
                 >
-                    {c.name}
                 </button>
             ))}
         </div>

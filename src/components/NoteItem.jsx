@@ -20,7 +20,7 @@ function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelet
                     <h2 className="note-item__title">{title}</h2>
                     <p className="note-item__pinned">{pinned ? 'Pinned' : 'Unpinned'}</p>
                 </div>
-                <p className="note-item__date">Created At: {showFormattedDate(createdAt)}</p>
+                <p className="note-item__date">{showFormattedDate(createdAt)}</p>
                 <p className="note-item__body">{body}</p>
 
                 <div className="note-item__action">

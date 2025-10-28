@@ -7,13 +7,13 @@ function TabNavigation({ activeTab, onTabChange }) {
                 className={`tab-button ${activeTab === 'active' ? 'active' : ''}`}
                 onClick={() => onTabChange('active')}
             >
-                Catatan Aktif
+                Active Notes
             </button>
             <button 
                 className={`tab-button ${activeTab === 'archived' ? 'active' : ''}`}
                 onClick={() => onTabChange('archived')}
             >
-                Catatan Arsip
+                Archived Notes
             </button>
         </div>
     );
