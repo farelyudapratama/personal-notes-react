@@ -202,6 +202,54 @@ input::placeholder, textarea::placeholder {
   border: 2px solid #00ccff;
 }
 
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  margin: 16px auto;
+  padding: 12px;
+  font-family: 'Poppins', sans-serif;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.search-bar::placeholder {
+  color: #aaa;
+}
+
+.tab-navigation {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  margin: 16px auto;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+  background-color: #0077ff;
+  color: white;
+}
+
 @media only screen and (min-width: 500px) {
   .notes-list {
     grid-template-columns: 1fr 1fr;

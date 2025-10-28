@@ -2,8 +2,8 @@ import React from 'react';
 import NoteItem from './NoteItem';
 import { filterNotes } from '../utils/filter';
 
-function NoteList({ notes, archived, onDelete, onArchive, onPin }) {
-    const filteredNotes = filterNotes(notes, archived);
+function NoteList({ notes, searchQuery, archived, onDelete, onArchive, onPin }) {
+    const filteredNotes = filterNotes(notes, archived, searchQuery);
 
     return (
         <div>
@@ -14,7 +14,7 @@ function NoteList({ notes, archived, onDelete, onArchive, onPin }) {
                         <NoteItem key={note.id} {...note} onDelete={onDelete} onArchive={onArchive} onPin={onPin} />
                     ))
                 ) : (
-                    <p>Tidak ada catatan {archived ? 'arsip' : 'aktif'}</p>
+                    <p>Tidak ada catatan {archived ? 'arsip' : 'aktif'}{searchQuery ? ' untuk pencarian "' + searchQuery + '"' : ''}</p>
                 )}
             </div>
         </div>

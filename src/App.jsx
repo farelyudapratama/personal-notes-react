@@ -2,18 +2,24 @@ import React from 'react';
 import { getInitialData } from './utils';
 import NoteList from './components/NoteList';
 import NoteInput from './components/NoteInput';
+import SearchBar from './components/SearchBar';
+import TabNavigation from './components/TabNavigation';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             notes: getInitialData(),
+            searchQuery: '',
+            activeTab: 'active',
         };
 
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onArchiveHandler = this.onArchiveHandler.bind(this);
         this.onPinHandler = this.onPinHandler.bind(this);
+        this.onSearchChangeHandler = this.onSearchChangeHandler.bind(this);
+        this.onTabChangeHandler = this.onTabChangeHandler.bind(this);
     }
 
     onDeleteHandler(id) {
@@ -57,16 +63,32 @@ class App extends React.Component {
         this.setState({ notes });
     }
 
+    onSearchChangeHandler(query) {
+        this.setState({ searchQuery: query });
+    }
+
+    onTabChangeHandler(tab) {
+        this.setState({ activeTab: tab });
+    }
+
     render() {
-        const { notes } = this.state;
+        const { notes, searchQuery, activeTab } = this.state;
 
         return (
             <div className="app">
                 <h1>My Notes App</h1>
+                <SearchBar query={searchQuery} onQueryChange={this.onSearchChangeHandler} />
                 <NoteInput addNote={this.onAddNoteHandler} />
+                <TabNavigation activeTab={activeTab} onTabChange={this.onTabChangeHandler} />
                 <div className="note-app__body">
-                    <NoteList notes={notes} archived={false} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler} onPin={this.onPinHandler} />
-                    <NoteList notes={notes} archived={true} onDelete={this.onDeleteHandler} onArchive={this.onArchiveHandler} onPin={this.onPinHandler} />
+                    <NoteList 
+                        notes={notes} 
+                        searchQuery={searchQuery} 
+                        archived={activeTab === 'archived'} 
+                        onDelete={this.onDeleteHandler} 
+                        onArchive={this.onArchiveHandler} 
+                        onPin={this.onPinHandler} 
+                    />
                 </div>
             </div>
         );
