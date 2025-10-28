@@ -1,6 +1,7 @@
 import React from 'react';
 import { showFormattedDate, presetColors } from '../utils';
 import DeleteButton from './DeleteButton';
+import ArchiveButton from './ArchiveButton';
 
 function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelete, onArchive }) {
     const selected = presetColors.find((i) => i.name === color) || presetColors[0];
@@ -22,18 +23,7 @@ function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelet
                 <p className="note-item__body">{body}</p>
 
                 <div className="note-item__action">
-                    <button
-                        type="button"
-                        className="note-item__archive-button"
-                        aria-label="Archive note"
-                        onClick={() => {
-                            if (typeof onArchive === 'function') {
-                                onArchive(id);
-                            }
-                        }}
-                    >
-                        {archived ? 'Unarchive' : 'Archive'}
-                    </button>
+                    <ArchiveButton id={id} archived={archived} onArchive={onArchive} />
                     <DeleteButton id={id} onDelete={onDelete} />
                 </div>
             </div>
