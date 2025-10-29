@@ -1,9 +1,11 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { getInitialData } from './utils';
 import NoteList from './components/NoteList';
 import NoteInput from './components/NoteInput';
 import TabNavigation from './components/TabNavigation';
 import HeaderApp from './components/Header';
+import NoteDetail from './pages/NoteDetail';
 
 class App extends React.Component {
     constructor(props) {
@@ -76,19 +78,28 @@ class App extends React.Component {
 
         return (
             <div className="app">
-                <HeaderApp searchQuery={searchQuery} onSearchChange={this.onSearchChangeHandler} />
-                <NoteInput addNote={this.onAddNoteHandler} />
-                <TabNavigation activeTab={activeTab} onTabChange={this.onTabChangeHandler} />
-                <div className="note-app__body">
-                    <NoteList 
-                        notes={notes} 
-                        searchQuery={searchQuery} 
-                        archived={activeTab === 'archived'} 
-                        onDelete={this.onDeleteHandler} 
-                        onArchive={this.onArchiveHandler} 
-                        onPin={this.onPinHandler} 
-                    />
-                </div>
+                <Routes>
+                    <Route path="/" element={
+                        <>
+                            <HeaderApp searchQuery={searchQuery} onSearchChange={this.onSearchChangeHandler} />
+                            <NoteInput addNote={this.onAddNoteHandler} />
+                            <TabNavigation activeTab={activeTab} onTabChange={this.onTabChangeHandler} />
+                            <div className="note-app__body">
+                                <NoteList 
+                                    notes={notes} 
+                                    searchQuery={searchQuery} 
+                                    archived={activeTab === 'archived'} 
+                                    onDelete={this.onDeleteHandler} 
+                                    onArchive={this.onArchiveHandler} 
+                                    onPin={this.onPinHandler} 
+                                />
+                            </div>
+                        </>
+                    } />
+                    <Route path="/detail/" element={
+                        <NoteDetail />
+                    } />
+                </Routes>
             </div>
         );
     }
