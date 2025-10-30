@@ -13,7 +13,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             notes: getInitialData(),
-            searchQuery: '',
+            searchQuery: props.initialSearchQuery || '',
             activeTab: 'active',
         };
 
@@ -68,6 +68,9 @@ class App extends React.Component {
 
     onSearchChangeHandler(query) {
         this.setState({ searchQuery: query });
+        if (typeof this.props.onUrlChange === 'function') {
+            this.props.onUrlChange(query);
+        }
     }
 
     onTabChangeHandler(tab) {
