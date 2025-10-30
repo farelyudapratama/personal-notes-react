@@ -9,11 +9,18 @@ function NoteDetail({ notes, onDelete }) {
     const note = notes.find((note) => note.id === noteId);
 
     if (!note) {
-        setTimeout(() => navigate('/not-found', { replace: true }), 100);
+        setTimeout(() => navigate('/not-found'), 100);
         return null;
     }
 
     const selected = presetColors.find(color => color.name === note.color) || presetColors[0];
+
+    const handleDelete = () => {
+        navigate('/');
+        setTimeout(() => {
+            onDelete(note.id);
+        }, 100);
+    };
 
     return (
     <div className="note-detail">
@@ -35,8 +42,10 @@ function NoteDetail({ notes, onDelete }) {
             <p>Archived: {note.archived ? 'Yes' : 'No'}</p>
             <p>Pinned: {note.pinned ? 'Yes' : 'No'}</p>
             </div>
-            <button onClick={() => navigate(-1)}>Back to Notes</button>
-            <button onClick={() => { onDelete(note.id); navigate(-1); }}>Delete Note</button>
+                <div className="note-detail__actions">
+                    <button className="btn-back" onClick={() => navigate(-1)}>Back to Notes</button>
+                    <button className="btn-delete" onClick={handleDelete}>Delete Note</button>
+                </div>
         </div>
     </div>
     );

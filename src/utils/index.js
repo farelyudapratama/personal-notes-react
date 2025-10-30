@@ -1,4 +1,4 @@
-const getInitialData = () => ([
+let notes = [
   {
     id: 1,
     title: "Babel",
@@ -53,7 +53,7 @@ const getInitialData = () => ([
     color: "pink",
     pinned: false,
   },
-]);
+];
 
 const showFormattedDate = (date) => {
   const options = {
@@ -73,4 +73,72 @@ const presetColors = [
   { name: 'purple', from: '#b537f254', to: '#9d4edd70', border: '#7b29cf', glow: 'rgba(181, 55, 242, 0.4)' },
 ];
 
-export { getInitialData, showFormattedDate, presetColors };
+function getAllNotes() {
+  return notes;
+}
+
+function getNote(id) {
+  return notes.find((note) => String(note.id) === String(id)) || null;
+}
+
+function getActiveNotes() {
+  return notes.filter((note) => !note.archived);
+}
+
+function getArchivedNotes() {
+  return notes.filter((note) => note.archived);
+}
+
+function addNote({ title, body, color }) {
+  const newNote = {
+    id: +new Date(),
+    title: title || '(untitled)',
+    body: body || '',
+    createdAt: new Date().toISOString(),
+    archived: false,
+    color: color || 'yellow',
+    pinned: false,
+  };
+  notes = [...notes, newNote];
+  return newNote;
+}
+
+function deleteNote(id) {
+  notes = notes.filter((note) => String(note.id) !== String(id));
+}
+
+function archiveNote(id) {
+  notes = notes.map((note) => (String(note.id) === String(id) ? { ...note, archived: true } : note));
+}
+
+function unarchiveNote(id) {
+  notes = notes.map((note) => (String(note.id) === String(id) ? { ...note, archived: false } : note));
+}
+
+function toggleArchive(id) {
+  notes = notes.map((note) => (String(note.id) === String(id) ? { ...note, archived: !note.archived } : note));
+}
+
+function togglePin(id) {
+  notes = notes.map((note) => (String(note.id) === String(id) ? { ...note, pinned: !note.pinned } : note));
+}
+
+function editNote({ id, title, body }) {
+  notes = notes.map((note) => (String(note.id) === String(id) ? { ...note, title, body } : note));
+}
+
+export {
+  showFormattedDate,
+  presetColors,
+  getAllNotes,
+  getNote,
+  getActiveNotes,
+  getArchivedNotes,
+  addNote,
+  deleteNote,
+  archiveNote,
+  unarchiveNote,
+  toggleArchive,
+  togglePin,
+  editNote,
+};

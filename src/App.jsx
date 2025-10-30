@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { getInitialData } from './utils';
+import { getAllNotes, addNote, deleteNote, toggleArchive, togglePin } from './utils';
 import NoteList from './components/NoteList';
 import NoteInput from './components/NoteInput';
 import TabNavigation from './components/TabNavigation';
@@ -12,7 +12,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: getInitialData(),
+            notes: getAllNotes(),
             searchQuery: props.initialSearchQuery || '',
             activeTab: 'active',
         };
@@ -26,44 +26,23 @@ class App extends React.Component {
     }
 
     onDeleteHandler(id) {
-        const notes = this.state.notes.filter((note) => note.id !== id);
-        this.setState({ notes });
+        deleteNote(id);
+        this.setState({ notes: getAllNotes() });
     }
 
     onAddNoteHandler({ title, body, color }) {
-        const newNote = {
-            id: +new Date(),
-            title,
-            body,
-            createdAt: new Date().toISOString(),
-            archived: false,
-            pinned: false,
-            color: color || 'yellow',
-        };
-
-        this.setState((prevState) => ({
-            notes: [...prevState.notes, newNote],
-        }));
+        addNote({ title, body, color });
+        this.setState({ notes: getAllNotes() });
     }
 
     onArchiveHandler(id) {
-        const notes = this.state.notes.map((note) => {
-            if (note.id === id) {
-                return { ...note, archived: !note.archived };
-            }
-            return note;
-        });
-        this.setState({ notes });
+        toggleArchive(id);
+        this.setState({ notes: getAllNotes() });
     }
 
     onPinHandler(id) {
-        const notes = this.state.notes.map((note) => {
-            if (note.id === id) {
-                return { ...note, pinned: !note.pinned };
-            }
-            return note;
-        });
-        this.setState({ notes });
+        togglePin(id);
+        this.setState({ notes: getAllNotes() });
     }
 
     onSearchChangeHandler(query) {
