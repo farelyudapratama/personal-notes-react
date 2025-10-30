@@ -303,6 +303,83 @@ input::placeholder, textarea::placeholder {
   color: white;
 }
 
+.not-found-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #202124; /* sama seperti body */
+  color: white;
+  padding: 16px;
+}
+
+.not-found-content {
+  text-align: center;
+  padding: 32px 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  max-width: 480px;
+  width: 100%;
+}
+
+.not-found-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 16px;
+  color: #ff5f52;
+  letter-spacing: 1px;
+}
+
+.not-found-content p {
+  font-size: 1.1rem;
+  color: #aaa;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  justify-content: center;
+}
+
+.not-found-actions button {
+  padding: 10px 20px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  background-color: transparent;
+  color: white;
+  transition: all 0.25s ease;
+}
+
+.not-found-actions button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.not-found-actions .btn-home {
+  border-color: #00ccff;
+  color: #00ccff;
+}
+
+.not-found-actions .btn-home:hover {
+  background-color: rgba(0, 204, 255, 0.15);
+}
+
+.not-found-actions .btn-back {
+  border-color: #ff5f52;
+  color: #ff5f52;
+}
+
+.not-found-actions .btn-back:hover {
+  background-color: rgba(255, 95, 82, 0.15);
+}
+
 @media only screen and (min-width: 500px) {
   .notes-list {
     grid-template-columns: 1fr 1fr;

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { getInitialData } from './utils';
 import NoteList from './components/NoteList';
 import NoteInput from './components/NoteInput';
 import TabNavigation from './components/TabNavigation';
 import HeaderApp from './components/Header';
 import NoteDetail from './pages/NoteDetail';
+import NotFoundPage from './pages/NotFoundPage';
 
 class App extends React.Component {
     constructor(props) {
@@ -96,9 +97,11 @@ class App extends React.Component {
                             </div>
                         </>
                     } />
-                    <Route path="/detail/" element={
-                        <NoteDetail />
+                    <Route path="/detail/:id" element={
+                        <NoteDetail notes={notes} onDelete={this.onDeleteHandler} />
                     } />
+                    <Route path="/not-found" element={<NotFoundPage />} />
+                    <Route path="*" element={<Navigate to="/not-found" replace />} />
                 </Routes>
             </div>
         );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { showFormattedDate, presetColors } from '../utils';
 import DeleteButton from './DeleteButton';
 import ArchiveButton from './ArchiveButton';
@@ -9,25 +10,26 @@ function NoteItem({ title, body, archived, pinned, createdAt, color, id, onDelet
 
     return (
         <div className={`note-item ${pinned ? 'pinned' : ''}`}>
-            <div
-                className="note-item__content"
-                style={{
-                    '--gradient': `linear-gradient(to right, ${selected.from}, ${selected.to})`,
-                    '--border': `${selected.border}`,
-                }}
-            >
-                <div className="note-item__header">
-                    <h2 className="note-item__title">{title}</h2>
-                    <p className="note-item__pinned">{pinned ? 'Pinned' : 'Unpinned'}</p>
+            <Link to={`/detail/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div
+                    className="note-item__content"
+                    style={{
+                        '--gradient': `linear-gradient(to right, ${selected.from}, ${selected.to})`,
+                        '--border': `${selected.border}`,
+                    }}
+                >
+                    <div className="note-item__header">
+                        <h2 className="note-item__title">{title}</h2>
+                        <p className="note-item__pinned">{pinned ? 'Pinned' : 'Unpinned'}</p>
+                    </div>
+                    <p className="note-item__date">{showFormattedDate(createdAt)}</p>
+                    <p className="note-item__body">{body}</p>
                 </div>
-                <p className="note-item__date">{showFormattedDate(createdAt)}</p>
-                <p className="note-item__body">{body}</p>
-
-                <div className="note-item__action">
-                    <PinButton id={id} pinned={pinned} onPin={onPin} />
-                    <ArchiveButton id={id} archived={archived} onArchive={onArchive} />
-                    <DeleteButton id={id} onDelete={onDelete} />
-                </div>
+            </Link>
+            <div className="note-item__action">
+                <PinButton id={id} pinned={pinned} onPin={onPin} />
+                <ArchiveButton id={id} archived={archived} onArchive={onArchive} />
+                <DeleteButton id={id} onDelete={onDelete} />
             </div>
         </div>
     );
