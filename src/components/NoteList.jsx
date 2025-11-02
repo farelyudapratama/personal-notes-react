@@ -1,9 +1,11 @@
 import React from 'react';
 import NoteItem from './NoteItem';
-import { filterNotes } from '../utils/filter';
 
-function NoteList({ notes, searchQuery, archived, onDelete, onArchive, onPin }) {
-    const filteredNotes = filterNotes(notes, archived, searchQuery);
+function NoteList({ notes, searchQuery, archived, onDelete, onArchive, onUnarchive }) {
+    const filteredNotes = notes.filter(note => 
+        note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        note.body.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div>
@@ -11,7 +13,13 @@ function NoteList({ notes, searchQuery, archived, onDelete, onArchive, onPin }) 
             <div className="notes-list">
                 {filteredNotes.length > 0 ? (
                     filteredNotes.map(note => (
-                        <NoteItem key={note.id} {...note} onDelete={onDelete} onArchive={onArchive} onPin={onPin} />
+                        <NoteItem 
+                            key={note.id} 
+                            {...note} 
+                            onDelete={onDelete} 
+                            onArchive={onArchive} 
+                            onUnarchive={onUnarchive}
+                        />
                     ))
                 ) : (
                     <p>There are no {archived ? 'archived' : 'active'} notes {searchQuery ? 'matching "' + searchQuery + '"' : ''}.</p>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { getAllNotes, addNote, deleteNote, toggleArchive, togglePin } from './utils';
 import NoteList from './components/NoteList';
 import NoteInput from './components/NoteInput';
 import TabNavigation from './components/TabNavigation';
@@ -9,13 +8,14 @@ import NoteDetail from './pages/NoteDetail';
 import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import { getUserLogged, putAccessToken } from './utils/network-data';
+import { getUserLogged, putAccessToken, getActiveNotes, getArchivedNotes, addNote, deleteNote, archiveNote, unarchiveNote } from './utils/network-data';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: getAllNotes(),
+            activeNotes: [],
+            archivedNotes: [],
             searchQuery: props.initialSearchQuery || '',
             activeTab: 'active',
 
@@ -26,7 +26,7 @@ class App extends React.Component {
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onArchiveHandler = this.onArchiveHandler.bind(this);
-        this.onPinHandler = this.onPinHandler.bind(this);
+        this.onUnarchiveHandler = this.onUnarchiveHandler.bind(this);
         this.onSearchChangeHandler = this.onSearchChangeHandler.bind(this);
         this.onTabChangeHandler = this.onTabChangeHandler.bind(this);
 
@@ -34,24 +34,32 @@ class App extends React.Component {
         this.onLogout = this.onLogout.bind(this);
     }
 
-    onDeleteHandler(id) {
-        deleteNote(id);
-        this.setState({ notes: getAllNotes() });
+    async onDeleteHandler(id) {
+        const result = await deleteNote(id);
+        if (!result.error) {
+            this.fetchNotes();
+        }
     }
 
-    onAddNoteHandler({ title, body, color }) {
-        addNote({ title, body, color });
-        this.setState({ notes: getAllNotes() });
+    async onAddNoteHandler({ title, body, color }) {
+        const result = await addNote({ title, body });
+        if (!result.error) {
+            this.fetchNotes();
+        }
     }
 
-    onArchiveHandler(id) {
-        toggleArchive(id);
-        this.setState({ notes: getAllNotes() });
+    async onArchiveHandler(id) {
+        const result = await archiveNote(id);
+        if (!result.error) {
+            this.fetchNotes();
+        }
     }
 
-    onPinHandler(id) {
-        togglePin(id);
-        this.setState({ notes: getAllNotes() });
+    async onUnarchiveHandler(id) {
+        const result = await unarchiveNote(id);
+        if (!result.error) {
+            this.fetchNotes();
+        }
     }
 
     onSearchChangeHandler(query) {
@@ -66,7 +74,6 @@ class App extends React.Component {
     }
 
     async onLoginSuccess({ accessToken }) {
-        console.log("accessToken diterima:", accessToken);
         putAccessToken(accessToken);
         const { data } = await getUserLogged();
 
@@ -85,11 +92,29 @@ class App extends React.Component {
     async componentDidMount() {
         const { data } = await getUserLogged();
 
-        this.setState({ authedUser: data, initializing: false });
+        if (data) {
+            this.setState({ authedUser: data });
+            await this.fetchNotes();
+        }
+
+        this.setState({ initializing: false });
+    }
+
+    async fetchNotes() {
+        const activeNotesResult = await getActiveNotes();
+        const archivedNotesResult = await getArchivedNotes();
+
+        if (!activeNotesResult.error) {
+            this.setState({ activeNotes: activeNotesResult.data });
+        }
+
+        if (!archivedNotesResult.error) {
+            this.setState({ archivedNotes: archivedNotesResult.data });
+        }
     }
 
     render() {
-        const { notes, searchQuery, activeTab, initializing, authedUser } = this.state;
+        const { activeNotes, archivedNotes, searchQuery, activeTab, initializing, authedUser } = this.state;
         if (initializing) {
             return null;
         }
@@ -105,6 +130,8 @@ class App extends React.Component {
             )
         }
 
+        const notes = activeTab === 'archived' ? archivedNotes : activeNotes;
+
         return (
             <div className="app">
                 <Routes>
@@ -119,14 +146,16 @@ class App extends React.Component {
                                     searchQuery={searchQuery} 
                                     archived={activeTab === 'archived'} 
                                     onDelete={this.onDeleteHandler} 
-                                    onArchive={this.onArchiveHandler} 
-                                    onPin={this.onPinHandler} 
+                                    onArchive={activeTab === 'archived' ? this.onUnarchiveHandler : this.onArchiveHandler} 
+                                    onUnarchive={this.onUnarchiveHandler}
                                 />
                             </div>
                         </>
                     } />
                     <Route path="/detail/:id" element={
-                        <NoteDetail notes={notes} onDelete={this.onDeleteHandler} />
+                        <NoteDetail 
+                            onDelete={this.onDeleteHandler} 
+                        />
                     } />
                     <Route path="/login" element={<Navigate to="/" replace />} />
                     <Route path="/register" element={<Navigate to="/" replace />} />

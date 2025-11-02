@@ -168,9 +168,10 @@ input::placeholder, textarea::placeholder {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background: var(--gradient);
-  border: 2px solid var(--border);
+  background: var(--gradient, linear-gradient(to right, #e3f02954, #ffc40070));
+  border: 2px solid var(--border, #ffaa00);
   backdrop-filter: blur(40px);
+  color: white;
 }
 
 .note-item__content > * {
