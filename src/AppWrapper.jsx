@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext.jsx';
 import App from './App';
 
 export default function AppWrapper() {
@@ -14,5 +15,9 @@ export default function AppWrapper() {
         }
     }
 
-    return <App initialSearchQuery={q} onUrlChange={changeSearchParams} />;
+    return (
+        <ThemeProvider>
+            <App initialSearchQuery={q} onUrlChange={changeSearchParams} />
+        </ThemeProvider>
+    );
 }

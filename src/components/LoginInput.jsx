@@ -1,47 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 
-class LoginInput extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-        };
+function LoginInput({ login = () => {} }) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-        this.onEmailChange = this.onEmailChange.bind(this);
-        this.onPasswordChange = this.onPasswordChange.bind(this);
-        this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    }
-
-    onEmailChange(event) {
-        this.setState({ email: event.target.value });
-    }
-
-    onPasswordChange(event) {
-        this.setState({ password: event.target.value });
-    }
-
-    onSubmitHandler(event) {
+    const onSubmitHandler = (event) => {
         event.preventDefault();
-        this.props.login({
-            email: this.state.email,
-            password: this.state.password,
+        login({
+            email,
+            password,
         });
-    }
+    };
 
-    render() {
-        return (
-            <form onSubmit={this.onSubmitHandler} className="login-input">
-                <input type="email" placeholder="Email" value={this.state.email} onChange={this.onEmailChange} />
-                <input type="password" placeholder="Password" autoComplete="current-password" value={this.state.password} onChange={this.onPasswordChange} />
-                <button>Login</button>
-            </form>
-        );
-    }
+    return (
+        <form onSubmit={onSubmitHandler} className="login-input">
+            <input 
+                type="email" 
+                placeholder="Email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+            />
+            <input 
+                type="password" 
+                placeholder="Password" 
+                autoComplete="current-password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+            />
+            <button>Login</button>
+        </form>
+    );
 }
-
-LoginInput.defaultProps = {
-    login: () => {},
-};
 
 export default LoginInput;

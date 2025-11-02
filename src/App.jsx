@@ -77,7 +77,8 @@ class App extends React.Component {
         putAccessToken(accessToken);
         const { data } = await getUserLogged();
 
-        this.setState({ authedUser: data })
+        this.setState({ authedUser: data });
+        await this.fetchNotes();
     }
 
     onLogout() {

@@ -4,46 +4,132 @@
   box-sizing: border-box;
 }
 
+/* Default theme (light) */
 body {
   font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Dark theme */
+[data-theme="dark"] body {
   background-color: #202124;
   color: white;
 }
-button{
+
+button {
   cursor: pointer;
+  border: none;
+  font-family: 'Poppins', sans-serif;
 }
-button:hover{
+button:hover {
   opacity: 0.8;
 }
+
+/* Light theme inputs */
 input, textarea {
   padding: 12px;
   margin: 12px 0;
   font-family: 'Poppins', sans-serif;
-  background-color: transparent;
-  color: white;
-  border: 1px solid #aaa;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 
+/* Dark theme inputs */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  background-color: #3c3c3c;
+  color: white;
+  border: 1px solid #666;
+}
+
 input::placeholder, textarea::placeholder {
+  color: #999;
+  font-weight: normal;
+}
+
+/* Dark theme placeholder */
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
   color: #aaa;
-  font-weight: bold;
 }
 
 .note-app__header {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 16px;
-  border-bottom: 1px solid #aaa;
+  padding: 8px 16px;
+  border-bottom: 1px solid #ccc;
+  gap: 16px;
+}
+
+/* Dark theme header */
+[data-theme="dark"] .note-app__header {
+  border-bottom: 1px solid #666;
 }
 
 .note-app__header h1 {
   margin: 8px 0;
   flex: 1;
+  color: #333;
+}
+
+/* Dark theme header title */
+[data-theme="dark"] .note-app__header h1 {
   color: white;
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+/* Dark theme toggle */
+[data-theme="dark"] .theme-toggle {
+  border: 1px solid #666;
+  color: white;
+  background-color: #444;
+}
+
+.theme-toggle:hover {
+  opacity: 0.8;
+}
+
+.btn-logout {
+  background: #eb8f8f;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+/* Dark theme logout button */
+[data-theme="dark"] .btn-logout {
+  border: 1px solid #666;
+  color: white;
+  background-color: #581414;
+}
+
+.btn-logout:hover {
+  opacity: 0.8;
+}
 
 .note-app__body {
   max-width: 90%;
@@ -133,13 +219,19 @@ input::placeholder, textarea::placeholder {
   display: block;
   width: 100%;
   padding: 8px;
-  background-color: transparent;
+  background-color: #007bff;
   font-family: 'Poppins', sans-serif;
   color: white;
-  border: 1px solid #aaa;
+  border: 1px solid #007bff;
   border-radius: 4px;
   font-weight: bold;
-  cursor: poPoppins;
+  cursor: pointer;
+}
+
+/* Dark theme button */
+[data-theme="dark"] .note-input button {
+  background-color: #0056b3;
+  border-color: #0056b3;
 }
 
 .notes-list {
@@ -152,15 +244,27 @@ input::placeholder, textarea::placeholder {
 
 .notes-list__empty-message {
   text-align: center;
+  color: #666;
+}
+
+/* Dark theme empty message */
+[data-theme="dark"] .notes-list__empty-message {
   color: #aaa;
 }
 
 .note-item {
-  border: 1px solid #aaa;
+  border: 1px solid #ddd;
   border-radius: 4px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+}
+
+/* Dark theme note item */
+[data-theme="dark"] .note-item {
+  border: 1px solid #555;
+  background-color: #333;
 }
 
 .note-item__content {
@@ -168,9 +272,11 @@ input::placeholder, textarea::placeholder {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background: var(--gradient, linear-gradient(to right, #e3f02954, #ffc40070));
-  border: 2px solid var(--border, #ffaa00);
-  backdrop-filter: blur(40px);
+  color: #333;
+}
+
+/* Dark theme note content */
+[data-theme="dark"] .note-item__content {
   color: white;
 }
 
@@ -189,16 +295,34 @@ input::placeholder, textarea::placeholder {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Dark theme note title */
+[data-theme="dark"] .note-item__title {
+  color: white;
 }
 
 .note-item__date {
   font-size: 12px;
   margin-bottom: 8px;
+  color: #666;
+}
+
+/* Dark theme date */
+[data-theme="dark"] .note-item__date {
   color: #aaa;
 }
 
 .note-item__body {
   font-size: 14px;
+  color: #555;
+}
+
+/* Dark theme body */
+[data-theme="dark"] .note-item__body {
+  color: #ccc;
 }
 
 .note-item__action {
@@ -210,50 +334,51 @@ input::placeholder, textarea::placeholder {
   width: 100%;
   background-color: transparent;
   border: 0;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #eee;
   padding: 8px 0;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  cursor: poPoppins;
+  cursor: pointer;
+}
+
+/* Dark theme note action border */
+[data-theme="dark"] .note-item__delete-button,
+[data-theme="dark"] .note-item__archive-button {
+  border-top: 1px solid #555;
 }
 
 .note-item__delete-button {
-  border-right: 1px solid #aaa;
-  color: #ff5f52;
+  border-right: 1px solid #eee;
+  color: #dc3545;
 }
 
 .note-item__archive-button {
-  color: #fff263;
+  color: #28a745;
+}
+
+/* Dark theme note action colors */
+[data-theme="dark"] .note-item__delete-button {
+  border-right: 1px solid #555;
+  color: #ff6b6b;
+}
+[data-theme="dark"] .note-item__archive-button {
+  color: #51cf66;
 }
 
 .note-item__archive-button:hover {
-  color: #c49000;
+  color: #1e7e34;
 }
 
 .note-item__delete-button:hover {
-  color: #b00020;
+  color: #c82333;
 }
 
-.note-item__pin-button {
-  display: block;
-  width: 100%;
-  background-color: transparent;
-  border: 0;
-  border-top: 1px solid #aaa;
-  border-right: 1px solid #aaa;
-  padding: 8px 0;
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  color: #00ccff;
+/* Dark theme hover actions */
+[data-theme="dark"] .note-item__archive-button:hover {
+  color: #3d9e4d;
 }
-
-.note-item__pin-button:hover {
-  color: #0099cc;
-}
-
-.note-item.pinned {
-  box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
-  border: 2px solid #00ccff;
+[data-theme="dark"] .note-item__delete-button:hover {
+  color: #e74c3c;
 }
 
 .note-detail {
@@ -265,13 +390,18 @@ input::placeholder, textarea::placeholder {
 .note-detail__content {
   width: 100%;
   max-width: 760px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border: 1px solid #aaa;
+  background: white;
+  border: 1px solid #ddd;
   border-radius: 4px;
   padding: 18px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-  backdrop-filter: blur(20px);
-  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Dark theme detail content */
+[data-theme="dark"] .note-detail__content {
+  background: #333;
+  border: 1px solid #555;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 .note-detail__header {
@@ -285,7 +415,7 @@ input::placeholder, textarea::placeholder {
 .note-detail__title {
   font-size: 1.6rem;
   font-weight: 700;
-  color: white;
+  color: #333;
   margin: 0;
   max-width: 70%;
   text-overflow: ellipsis;
@@ -293,24 +423,44 @@ input::placeholder, textarea::placeholder {
   white-space: nowrap;
 }
 
+/* Dark theme detail title */
+[data-theme="dark"] .note-detail__title {
+  color: white;
+}
+
 .note-detail__date {
-  color: #aaa;
+  color: #666;
   font-size: 0.95rem;
+}
+
+/* Dark theme detail date */
+[data-theme="dark"] .note-detail__date {
+  color: #aaa;
 }
 
 .note-detail__body {
   margin: 12px 0 18px 0;
-  color: #eaeaea;
+  color: #555;
   line-height: 1.6;
   font-size: 1rem;
+}
+
+/* Dark theme detail body */
+[data-theme="dark"] .note-detail__body {
+  color: #ccc;
 }
 
 .note-detail__meta {
   display: flex;
   gap: 12px;
-  color: #ddd;
+  color: #666;
   font-size: 0.95rem;
   margin-bottom: 16px;
+}
+
+/* Dark theme detail meta */
+[data-theme="dark"] .note-detail__meta {
+  color: #aaa;
 }
 
 .note-detail__actions {
@@ -322,29 +472,57 @@ input::placeholder, textarea::placeholder {
 
 .note-detail__actions button {
   padding: 8px 14px;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  background: transparent;
-  color: white;
+  background: #f8f9fa;
+  color: #333;
   font-weight: 700;
 }
 
+/* Dark theme detail actions */
+[data-theme="dark"] .note-detail__actions button {
+  border: 1px solid #555;
+  background: #444;
+  color: white;
+}
+
 .note-detail__actions .btn-delete {
-  border-color: #ff5f52;
-  color: #ff5f52;
+  border-color: #dc3545;
+  color: #dc3545;
+  background: #fff5f5;
 }
 
 .note-detail__actions .btn-delete:hover {
-  background: rgba(255,95,82,0.08);
+  background: #f8d7da;
 }
 
 .note-detail__actions .btn-back {
-  border-color: #00ccff;
-  color: #00ccff;
+  border-color: #007bff;
+  color: #007bff;
+  background: #f0f8ff;
 }
 
 .note-detail__actions .btn-back:hover {
-  background: rgba(0,204,255,0.06);
+  background: #d0ebff;
+}
+
+/* Dark theme detail button actions */
+[data-theme="dark"] .note-detail__actions .btn-delete {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+  background: #402020;
+}
+[data-theme="dark"] .note-detail__actions .btn-delete:hover {
+  background: #502828;
+}
+
+[data-theme="dark"] .note-detail__actions .btn-back {
+  border-color: #64b5f6;
+  color: #64b5f6;
+  background: #203040;
+}
+[data-theme="dark"] .note-detail__actions .btn-back:hover {
+  background: #283848;
 }
 
 .search-bar {
@@ -353,14 +531,26 @@ input::placeholder, textarea::placeholder {
   margin: 16px auto;
   padding: 12px;
   font-family: 'Poppins', sans-serif;
-  background-color: transparent;
-  color: white;
-  border: 1px solid #aaa;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
 }
 
+/* Dark theme search bar */
+[data-theme="dark"] .search-bar {
+  background-color: #3c3c3c;
+  color: white;
+  border: 1px solid #666;
+}
+
 .search-bar::placeholder {
+  color: #999;
+}
+
+/* Dark theme search placeholder */
+[data-theme="dark"] .search-bar::placeholder {
   color: #aaa;
 }
 
@@ -369,16 +559,21 @@ input::placeholder, textarea::placeholder {
   width: 100%;
   max-width: 500px;
   margin: 16px auto;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
   border-radius: 4px;
   overflow: hidden;
+}
+
+/* Dark theme tab navigation */
+[data-theme="dark"] .tab-navigation {
+  border: 1px solid #555;
 }
 
 .tab-button {
   flex: 1;
   padding: 12px;
-  background-color: transparent;
-  color: white;
+  background-color: #f8f9fa;
+  color: #495057;
   border: none;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
@@ -387,11 +582,24 @@ input::placeholder, textarea::placeholder {
 }
 
 .tab-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #e9ecef;
 }
 
 .tab-button.active {
-  background-color: #002d61;
+  background-color: #007bff;
+  color: white;
+}
+
+/* Dark theme tab button */
+[data-theme="dark"] .tab-button {
+  background-color: #444;
+  color: #ddd;
+}
+[data-theme="dark"] .tab-button:hover {
+  background-color: #555;
+}
+[data-theme="dark"] .tab-button.active {
+  background-color: #0056b3;
   color: white;
 }
 
@@ -400,35 +608,57 @@ input::placeholder, textarea::placeholder {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #202124; /* sama seperti body */
-  color: white;
+  background-color: #f5f5f5;
+  color: #333;
   padding: 16px;
+}
+
+/* Dark theme not found page */
+[data-theme="dark"] .not-found-page {
+  background-color: #202124;
+  color: white;
 }
 
 .not-found-content {
   text-align: center;
   padding: 32px 24px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid #aaa;
+  background: white;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   max-width: 480px;
   width: 100%;
+}
+
+/* Dark theme not found content */
+[data-theme="dark"] .not-found-content {
+  background: #333;
+  border: 1px solid #555;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .not-found-content h1 {
   font-size: 2.8rem;
   margin-bottom: 16px;
-  color: #ff5f52;
+  color: #dc3545;
   letter-spacing: 1px;
+}
+
+/* Dark theme not found header */
+[data-theme="dark"] .not-found-content h1 {
+  color: #ff6b6b;
 }
 
 .not-found-content p {
   font-size: 1.1rem;
-  color: #aaa;
+  color: #666;
   margin-bottom: 24px;
   line-height: 1.6;
+}
+
+/* Dark theme not found text */
+[data-theme="dark"] .not-found-content p {
+  color: #aaa;
 }
 
 .not-found-actions {
@@ -440,36 +670,62 @@ input::placeholder, textarea::placeholder {
 
 .not-found-actions button {
   padding: 10px 20px;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
-  background-color: transparent;
-  color: white;
+  background-color: #f8f9fa;
+  color: #333;
   transition: all 0.25s ease;
 }
 
 .not-found-actions button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #e9ecef;
 }
 
 .not-found-actions .btn-home {
-  border-color: #00ccff;
-  color: #00ccff;
+  border-color: #007bff;
+  color: #007bff;
 }
 
 .not-found-actions .btn-home:hover {
-  background-color: rgba(0, 204, 255, 0.15);
+  background-color: #e7f3ff;
 }
 
 .not-found-actions .btn-back {
-  border-color: #ff5f52;
-  color: #ff5f52;
+  border-color: #dc3545;
+  color: #dc3545;
 }
 
 .not-found-actions .btn-back:hover {
-  background-color: rgba(255, 95, 82, 0.15);
+  background-color: #f8d7da;
+}
+
+/* Dark theme not found actions */
+[data-theme="dark"] .not-found-actions button {
+  border: 1px solid #555;
+  background-color: #444;
+  color: white;
+}
+[data-theme="dark"] .not-found-actions button:hover {
+  background-color: #555;
+}
+
+[data-theme="dark"] .not-found-actions .btn-home {
+  border-color: #64b5f6;
+  color: #64b5f6;
+}
+[data-theme="dark"] .not-found-actions .btn-home:hover {
+  background-color: #203040;
+}
+
+[data-theme="dark"] .not-found-actions .btn-back {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+[data-theme="dark"] .not-found-actions .btn-back:hover {
+  background-color: #402020;
 }
 
 @media only screen and (min-width: 500px) {
