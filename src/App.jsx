@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import NoteList from './components/NoteList';
 import TabNavigation from './components/TabNavigation';
 import HeaderApp from './components/Header';
+import Loading from './components/Loading';
 import NoteDetail from './pages/NoteDetail';
 import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
@@ -21,6 +22,7 @@ class App extends React.Component {
 
             authedUser: null,
             initializing: true,
+            loading: false,
         };
 
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
@@ -35,30 +37,54 @@ class App extends React.Component {
     }
 
     async onDeleteHandler(id) {
-        const result = await deleteNote(id);
-        if (!result.error) {
-            this.fetchNotes();
+        this.setState({ loading: true });
+        try {
+            const result = await deleteNote(id);
+            if (!result.error) {
+                await this.fetchNotes();
+            }
+            return result;
+        } finally {
+            this.setState({ loading: false });
         }
     }
 
     async onAddNoteHandler({ title, body }) {
-        const result = await addNote({ title, body });
-        if (!result.error) {
-            this.fetchNotes();
+        this.setState({ loading: true });
+        try {
+            const result = await addNote({ title, body });
+            if (!result.error) {
+                await this.fetchNotes();
+            }
+            return result;
+        } finally {
+            this.setState({ loading: false });
         }
     }
 
     async onArchiveHandler(id) {
-        const result = await archiveNote(id);
-        if (!result.error) {
-            this.fetchNotes();
+        this.setState({ loading: true });
+        try {
+            const result = await archiveNote(id);
+            if (!result.error) {
+                await this.fetchNotes();
+            }
+            return result;
+        } finally {
+            this.setState({ loading: false });
         }
     }
 
     async onUnarchiveHandler(id) {
-        const result = await unarchiveNote(id);
-        if (!result.error) {
-            this.fetchNotes();
+        this.setState({ loading: true });
+        try {
+            const result = await unarchiveNote(id);
+            if (!result.error) {
+                await this.fetchNotes();
+            }
+            return result;
+        } finally {
+            this.setState({ loading: false });
         }
     }
 
@@ -74,11 +100,16 @@ class App extends React.Component {
     }
 
     async onLoginSuccess({ accessToken }) {
-        putAccessToken(accessToken);
-        const { data } = await getUserLogged();
+        this.setState({ loading: true });
+        try {
+            putAccessToken(accessToken);
+            const { data } = await getUserLogged();
 
-        this.setState({ authedUser: data });
-        await this.fetchNotes();
+            this.setState({ authedUser: data });
+            await this.fetchNotes();
+        } finally {
+            this.setState({ loading: false });
+        }
     }
 
     onLogout() {
@@ -91,31 +122,39 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        const { data } = await getUserLogged();
+        this.setState({ loading: true });
+        try {
+            const { data } = await getUserLogged();
 
-        if (data) {
-            this.setState({ authedUser: data });
-            await this.fetchNotes();
+            if (data) {
+                this.setState({ authedUser: data });
+                await this.fetchNotes();
+            }
+        } finally {
+            this.setState({ loading: false, initializing: false });
         }
-
-        this.setState({ initializing: false });
     }
 
     async fetchNotes() {
-        const activeNotesResult = await getActiveNotes();
-        const archivedNotesResult = await getArchivedNotes();
+        this.setState({ loading: true });
+        try {
+            const activeNotesResult = await getActiveNotes();
+            const archivedNotesResult = await getArchivedNotes();
 
-        if (!activeNotesResult.error) {
-            this.setState({ activeNotes: activeNotesResult.data });
-        }
+            if (!activeNotesResult.error) {
+                this.setState({ activeNotes: activeNotesResult.data });
+            }
 
-        if (!archivedNotesResult.error) {
-            this.setState({ archivedNotes: archivedNotesResult.data });
+            if (!archivedNotesResult.error) {
+                this.setState({ archivedNotes: archivedNotesResult.data });
+            }
+        } finally {
+            this.setState({ loading: false });
         }
     }
 
     render() {
-        const { activeNotes, archivedNotes, searchQuery, activeTab, initializing, authedUser } = this.state;
+        const { activeNotes, archivedNotes, searchQuery, activeTab, initializing, authedUser, loading } = this.state;
         if (initializing) {
             return null;
         }
@@ -135,6 +174,7 @@ class App extends React.Component {
 
         return (
             <div className="app">
+                {loading && <Loading />}
                 <Routes>
                     <Route path="/" element={
                         <>

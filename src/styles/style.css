@@ -846,3 +846,50 @@ input::placeholder, textarea::placeholder {
     justify-content: center;
   }
 }
+
+.loading-indicator {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.9);
+  color: #333;
+  padding: 6px 10px;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  z-index: 1200;
+  font-size: 13px;
+}
+
+[data-theme="dark"] .loading-indicator {
+  background: rgba(30,30,30,0.85);
+  color: #eee;
+}
+
+.loading-spinner {
+  animation: rotate 1s linear infinite;
+}
+.loading-spinner .path {
+  stroke: #007bff;
+  stroke-linecap: round;
+  stroke-dasharray: 90;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation: dash 1.2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .loading-spinner .path {
+  stroke: #64b5f6;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes dash {
+  0% { stroke-dashoffset: 90; }
+  50% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 90; }
+}
