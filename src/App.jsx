@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import NoteList from './components/NoteList';
-import NoteInput from './components/NoteInput';
 import TabNavigation from './components/TabNavigation';
 import HeaderApp from './components/Header';
 import NoteDetail from './pages/NoteDetail';
@@ -9,6 +8,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { getUserLogged, putAccessToken, getActiveNotes, getArchivedNotes, addNote, deleteNote, archiveNote, unarchiveNote } from './utils/network-data';
+import AddNotePage from './pages/AddNotePage';
 
 class App extends React.Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class App extends React.Component {
         }
     }
 
-    async onAddNoteHandler({ title, body, color }) {
+    async onAddNoteHandler({ title, body }) {
         const result = await addNote({ title, body });
         if (!result.error) {
             this.fetchNotes();
@@ -139,7 +139,6 @@ class App extends React.Component {
                     <Route path="/" element={
                         <>
                             <HeaderApp searchQuery={searchQuery} onSearchChange={this.onSearchChangeHandler} logout={this.onLogout} name={authedUser.name}   />
-                            <NoteInput addNote={this.onAddNoteHandler} />
                             <TabNavigation activeTab={activeTab} onTabChange={this.onTabChangeHandler} />
                             <div className="note-app__body">
                                 <NoteList 
@@ -158,6 +157,7 @@ class App extends React.Component {
                             onDelete={this.onDeleteHandler} 
                         />
                     } />
+                    <Route path='/note/new' element={<AddNotePage addNote={this.onAddNoteHandler} />} />
                     <Route path="/login" element={<Navigate to="/" replace />} />
                     <Route path="/register" element={<Navigate to="/" replace />} />
                     <Route path="/not-found" element={<NotFoundPage />} />

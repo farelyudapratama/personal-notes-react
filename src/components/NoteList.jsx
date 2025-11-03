@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import NoteItem from './NoteItem';
 
 function NoteList({ notes, searchQuery, archived, onDelete, onArchive, onUnarchive }) {
@@ -9,7 +10,12 @@ function NoteList({ notes, searchQuery, archived, onDelete, onArchive, onUnarchi
 
     return (
         <div>
-            <h2>{archived ? 'Archived Notes' : 'Active Notes'}</h2>
+            <div className="notes-header">
+                <h2>{archived ? 'Archived Notes' : 'Active Notes'}</h2>
+                {!archived && (
+                    <Link to="/note/new" className="add-note-link">+ New Note</Link>
+                )}
+            </div>
             <div className="notes-list">
                 {filteredNotes.length > 0 ? (
                     filteredNotes.map(note => (
